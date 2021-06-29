@@ -1,0 +1,166 @@
+import java.util.Scanner;
+
+class Main{
+   static int cont;
+   private No primeiro;
+   private No ultimo;
+   private String nomeDaLista;
+  
+  public Main(String nome) {
+  nomeDaLista = nome;
+  primeiro = ultimo = null;
+  }
+  
+  public Main() {
+  nomeDaLista = "ACME";
+  primeiro = ultimo = null;
+  }
+  
+  public void InsereNaFrente(String item) {
+   if (Vazia())
+   primeiro = ultimo = new No(item);
+   else
+   primeiro = new No(item, primeiro);
+  }
+
+  public void InsereNoFundo(String item) {
+   if (Vazia())
+   primeiro = ultimo = new No(item);
+   else
+  {
+   ultimo.setProx(new No(item));
+  ultimo = ultimo.getProx();
+  }
+  }
+
+ public String RemoveDaFrente() {
+  if (Vazia())
+  {
+  return null;
+  }
+  String item = primeiro.getDado();
+  if (primeiro == ultimo)
+  primeiro = ultimo = null;
+    
+  else
+  primeiro = primeiro.getProx();
+  return item;
+  }
+  public String RemoveDoFundo() {
+  if (Vazia()){
+  return null;
+  }
+  String item = ultimo.getDado();
+  if (primeiro == ultimo)
+  primeiro = ultimo = null;
+  else {
+  No atual = primeiro;
+  while (atual.getProx() != ultimo)
+  atual = atual.getProx();
+  ultimo = atual;
+  atual.setProx(null);
+  }
+  return item;
+  }  
+  public boolean Vazia() {
+  return primeiro == null;
+  } 
+  public String EscreveLista() {
+   String temp = "";
+   if (Vazia()) {
+   temp += "Vazia " + nomeDaLista;
+   return temp;
+   }
+
+   temp += "Nomes dos funcionarios da " + nomeDaLista + " : \n\n";
+   No atual = primeiro;
+   while (atual != null) {
+   temp += atual.getDado() + " ";
+   atual = atual.getProx();
+   }
+
+   temp += "\n";
+   return temp;
+  }
+   public String exibePrim() {
+  if (primeiro == null) return "Primeiro: null";
+
+  else return "Primeiro: " + primeiro.getDado();
+
+}
+public String exibeUlt() {
+if (ultimo == null) return "Ultimo: null";
+else return "Ultimo: " + ultimo.getDado();
+}
+
+public String contratar(String nome, int idade, int ddd){
+
+  cont = cont + 1;
+
+  if (Vazia())
+   primeiro = ultimo = new No(nome);
+  else
+   primeiro = new No(nome, primeiro);
+   return nome;
+}
+
+public String checar(String nome){ 
+  
+  No atual = primeiro;
+
+
+  while (atual != null){
+
+    if (atual.getDado() == nome){
+     System.out.println(atual.getDado());
+     return nome;
+  }
+  atual = atual.getProx();
+ }
+  return "Não encontrado.";
+  
+
+  }
+  public Main Juntar(Main l1, Main l2){
+  
+   Main l3 = new Main();
+   
+   No atual1 = l1.primeiro;
+   No atual2 = l2.primeiro;
+
+       while(atual1 != null){
+
+         l3.InsereNoFundo(atual1.getDado());
+          
+         l3.InsereNoFundo(atual2.getDado());
+
+         System.out.println(atual1.getDado());
+         System.out.println(atual2.getDado());
+
+         atual1 = atual1.getProx();
+         atual2 = atual2.getProx();
+       }
+    return l3;
+  }
+
+  public static void main( String[] args) {
+
+  Scanner leia = new Scanner(System.in);
+
+  String nome;
+  int idade, ddd;
+
+  Main l1 = new Main();
+  Main l2 = new Main();
+
+  l1.contratar("Marta", 19, 11);
+  l1.contratar("Maria", 18, 42);
+  l2.contratar("mano fino", 18, 32);
+  l2.contratar("mano grande", 15, 43);
+  l2.contratar("mano torto", 16, 73);
+
+  l1.Juntar(l1,l2);
+
+  System.out.println("Contagem de elementos: "+cont);
+}
+}
